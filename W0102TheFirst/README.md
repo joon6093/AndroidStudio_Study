@@ -1,2 +1,4 @@
 # AndroidStudio-study
-코루틴을 이용한 안드로이드 앱 제작 
+### 1주차 ~ 2주차 결과
+![image](https://github.com/joon6093/AndroidStudio-study/assets/118044367/6e931a56-bd84-4e5b-a544-eeabe0a98a40)
+
