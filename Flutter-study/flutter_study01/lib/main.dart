@@ -1,45 +1,27 @@
 import 'package:flutter/material.dart';
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Stateful Widget Demo',
+      title: 'Flutter Demo',
       theme: ThemeData(
-          primarySwatch: Colors.deepOrange
+          primarySwatch: Colors.blue
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
-
-class MyHomePage extends StatefulWidget { //StateFulWidget 클래스
+class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-class _MyHomePageState extends State<MyHomePage> { //상태 클래스
-  var _text = 'Hello';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('HelloWorld'),
+        title: const Text('제목'),
       ),
-      body: Text(
-        _text,
-        style: TextStyle(fontSize: 40),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            if (_text == 'Hello') {
-              _text = 'World';
-            } else {
-              _text = 'Hello';
-            }
-          });
-        },
+      body: Image.asset(
+          'assets/누워있는렉돌.png'
       ),
     );
   }
