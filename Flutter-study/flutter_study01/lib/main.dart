@@ -13,38 +13,45 @@ class MyApp extends StatelessWidget {
   }
 }
 
-const List<String> list = <String>['Apple','Banana','Mango', 'Melon'];
+enum Fruit { APPLE, BANANA }
 
-class MyHomePage extends StatefulWidget{
+class MyHomePage extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String dropDownValue = list.first;
+  Fruit _fruit = Fruit.APPLE;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('제목'),
-        ),
-        body: DropdownButton<String>(
-          items: list.map<DropdownMenuItem<String>>((String value){
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          value: dropDownValue,
-          icon: Icon(Icons.arrow_drop_down),
-          iconSize: 24,
-          elevation: 8,
-          onChanged:(String? value){
-            setState(() {
-              dropDownValue = value!;
-            });
-          },
-        ),
+      appBar: AppBar(
+        title: Text('제목'),
+      ),
+      body: Column(
+        children: <Widget>[
+          RadioListTile(
+            title: Text('Apple'),
+            value: Fruit.APPLE,
+            groupValue: _fruit,
+            onChanged: (value) {
+              setState(() {
+                _fruit = value as Fruit;
+              });
+            },
+          ),
+          RadioListTile(
+            title: Text('Banana'),
+            value: Fruit.BANANA,
+            groupValue: _fruit,
+            onChanged: (value) {
+              setState(() {
+                _fruit = value as Fruit;
+              });
+            },
+          ),
+        ],
+      ),
     );
   }
 }
