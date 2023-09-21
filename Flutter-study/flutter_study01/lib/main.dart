@@ -31,11 +31,15 @@ class _MyHomePageState extends State<MyHomePage> { //상태 클래스
         style: TextStyle(fontSize: 40),
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            setState(() {
+        onPressed: () {
+          setState(() {
+            if (_text == 'Hello') {
               _text = 'World';
-            });
-          }
+            } else {
+              _text = 'Hello';
+            }
+          });
+        },
       ),
     );
   }
