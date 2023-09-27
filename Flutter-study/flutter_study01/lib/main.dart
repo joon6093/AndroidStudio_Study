@@ -13,44 +13,40 @@ class MyApp extends StatelessWidget {
   }
 }
 
-enum Fruit { APPLE, BANANA }
-
 class MyHomePage extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Fruit _fruit = Fruit.APPLE;
+  TimeOfDay _selectedTime = TimeOfDay.now();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('제목'),
       ),
-      body: Column(
-        children: <Widget>[
-          RadioListTile(
-            title: Text('Apple'),
-            value: Fruit.APPLE,
-            groupValue: _fruit,
-            onChanged: (value) {
-              setState(() {
-                _fruit = value as Fruit;
-              });
-            },
-          ),
-          RadioListTile(
-            title: Text('Banana'),
-            value: Fruit.BANANA,
-            groupValue: _fruit,
-            onChanged: (value) {
-              setState(() {
-                _fruit = value as Fruit;
-              });
-            },
-          ),
-        ],
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            ElevatedButton(
+              child: Text('Time'),
+              onPressed: () {
+                Future<TimeOfDay?> selectedTime = showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay.now(), //초기값
+                );
+                selectedTime.then((date) {
+                  setState(() {
+                    _selectedTime = date!;
+                  });
+                });
+              },
+            ),
+            if (_selectedTime != null) //시간이 선택되어 있다면, Text로 출력
+              Text('${_selectedTime.hour}시 ${_selectedTime.minute} 분'),
+          ],
+        ),
       ),
     );
   }
