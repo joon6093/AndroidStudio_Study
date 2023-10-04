@@ -19,34 +19,80 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  TimeOfDay _selectedTime = TimeOfDay.now();
+  final controller = PageController(
+    initialPage: 0,
+  );
+  ListView page1()
+  {
+    return ListView(
+      children: <Widget>[
+        ListTile(
+          title: Text('ListView'),
+          subtitle: Text('Using ListTile'),
+          trailing: Icon(Icons.more_vert),
+          onTap:(){},
+        ),
+        ListTile(
+          leading: FlutterLogo(size: 50.0,),
+          title: Text('Flutter'),
+          trailing: Icon(Icons.autorenew),
+          onTap:(){},
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.account_box,
+            size: 50.0,
+          ),
+          title: Text('Contacts'),
+          subtitle: Text('Add Phone Number'),
+          trailing: Icon(Icons.add),
+          onTap: () {},
+        )
+      ],
+    );
+  }
+  GridView page2()
+  {
+    return GridView.count(
+      padding: const EdgeInsets.all(10),
+      mainAxisSpacing: 50,
+      crossAxisSpacing: 10,
+      crossAxisCount: 3,
+      children: <Widget>[
+        Container(
+          color: Colors.red,
+        ),
+        Container(
+          color: Colors.red,
+        ),
+        Container(
+          color: Colors.red,
+        ),
+        Container(
+          color: Colors.red,
+        ),
+        Container(
+          color: Colors.red,
+        ),
+        Container(
+          color: Colors.red,
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('제목'),
       ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            ElevatedButton(
-              child: Text('Time'),
-              onPressed: () {
-                Future<TimeOfDay?> selectedTime = showTimePicker(
-                  context: context,
-                  initialTime: TimeOfDay.now(), //초기값
-                );
-                selectedTime.then((date) {
-                  setState(() {
-                    _selectedTime = date!;
-                  });
-                });
-              },
-            ),
-            if (_selectedTime != null) //시간이 선택되어 있다면, Text로 출력
-              Text('${_selectedTime.hour}시 ${_selectedTime.minute} 분'),
-          ],
-        ),
+      body: PageView(
+        controller: controller,
+        children: <Widget>[
+          page1(),
+          page2(),
+        ],
       ),
     );
   }
