@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_study01/second_page.dart';
 import 'package:flutter_study01/student.dart';
 class FirstPage extends StatelessWidget {
   const FirstPage({Key? key}) : super(key: key);
@@ -10,14 +9,14 @@ class FirstPage extends StatelessWidget {
         title: const Text('First'),
       ),
       body: ElevatedButton(
-        child: const Text('Next Page'),
+        child:  const Text('Next Page'),
         onPressed: () async {
-          final student1 = Student('Gil-Dong', 30, 20231005);
-          final result = await Navigator.push(
+          final result = await Navigator.pushNamed(
             context,
-            MaterialPageRoute(builder: (context) => SecondPage(student:student1)),
-          );
-          print(result);
+            '/second',
+            arguments: Student('Seong-Hyoen', 19, 20190456),
+          ) as Student;
+          print('in FirstPage ${result.name}');
         },
       ),
     );

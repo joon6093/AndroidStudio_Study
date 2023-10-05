@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'first_page.dart';
 import 'second_page.dart';
-void main() => runApp(MyApp());
+
+void main() => runApp(const MyApp());
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
@@ -11,6 +13,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const FirstPage(), //첫 페이지를 시작 페이지로 지정
+      initialRoute: '/first', //처음 시작하는 화면 정보(
+      routes: {
+        '/first': (context) => FirstPage(),
+        '/second': (context) => SecondPage(),
+      },
     );
-  }}
+  }
+}
