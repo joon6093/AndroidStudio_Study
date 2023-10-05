@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'first_page.dart';
 import 'second_page.dart';
+import 'counter.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Navigator Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return ChangeNotifierProvider<Counter>(
+      create: (_) => Counter(),
+      child: MaterialApp(
+        title: 'Navigator Demo',
+        theme: ThemeData(primarySwatch: Colors.blue),
+        //home: const FirstPage(),
+        initialRoute: '/first',
+        routes: {
+          '/first': (context) => FirstPage(),
+          '/second': (context) => SecondPage(),
+        },
       ),
-      initialRoute: '/first', //처음 시작하는 화면 정보(
-      routes: {
-        '/first': (context) => FirstPage(),
-        '/second': (context) => SecondPage(),
-      },
     );
+
   }
 }
