@@ -1,16 +1,14 @@
 # netflix_clone_test
+### 홈화면
+![image](https://github.com/joon6093/AndroidStudio-study/assets/118044367/12250b2e-5dee-4ba2-8142-8cb9302c8e34)
 
-A new Flutter project.
+### 검색화면
+![image](https://github.com/joon6093/AndroidStudio-study/assets/118044367/44446038-2ac5-4cab-8e63-3e4d34de3c42)
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+### 저장한 콘텐츠
+![image](https://github.com/joon6093/AndroidStudio-study/assets/118044367/b04d9391-1943-4082-83ef-0f487ab37b91)
 
-A few resources to get you started if this is your first Flutter project:
+### 내정보
+![image](https://github.com/joon6093/AndroidStudio-study/assets/118044367/211e0560-d7e7-434a-a282-8316b1110b90)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
