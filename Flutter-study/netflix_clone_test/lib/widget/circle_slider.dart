@@ -5,16 +5,16 @@ import '../screen/detail_screen.dart';
 
 class CircleSlider extends StatelessWidget {
   final List<Movie> movies;
-  CircleSlider({required this.movies});
+  const CircleSlider({super.key, required this.movies});
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(7),
+      padding: const EdgeInsets.all(7),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text('미리보기'),
-          Container(
+          const Text('미리보기'),
+          SizedBox(
             height: 120,
             child: ListView(
               scrollDirection: Axis.horizontal,
@@ -42,11 +42,11 @@ List<Widget> makeCircleImages(BuildContext context, List<Movie> movies) {
               }));
         },
         child: Container(
-          padding: EdgeInsets.only(right: 10),
+          padding: const EdgeInsets.only(right: 10),
           child: Align(
             alignment: Alignment.centerLeft,
             child: CircleAvatar(
-              backgroundImage: AssetImage('images/' + movies[i].poster),
+              backgroundImage: NetworkImage(movies[i].poster),
               radius: 48,
             ),
           ),

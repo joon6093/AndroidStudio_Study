@@ -9,11 +9,11 @@ class BoxSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(7),
+      padding: const EdgeInsets.all(7),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text('지금 뜨는 콘텐츠'),
+          const Text('지금 뜨는 콘텐츠'),
           Container(
             height: 120,
             child: ListView(
@@ -41,10 +41,10 @@ List<Widget> makeBoxImages(BuildContext context, List<Movie> movies) {
             }));
       },
       child: Container(
-        padding: EdgeInsets.only(right: 10),
+        padding: const EdgeInsets.only(right: 10),
         child: Align(
           alignment: Alignment.centerLeft,
-          child: Image.asset('images/' + movies[i].poster),
+          child: Image.network(movies[i].poster),
         ),
       ),
     ));
