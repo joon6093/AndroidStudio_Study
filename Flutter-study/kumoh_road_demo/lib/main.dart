@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kumoh_road_demo/screen/login_screen.dart';
+import 'package:kumoh_road_demo/auth_screen/login_screen.dart';
 
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
