@@ -59,10 +59,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       password: _passInputText.text.trim(),
                     );
                     print('success login');
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomeScreen()),
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const HomeScreen(),
+                      ),
                     );
                   } on FirebaseAuthException catch (e) {
                     print('an error occured $e');
@@ -76,8 +76,8 @@ class _LoginScreenState extends State<LoginScreen> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () async {
-                  final _googleSignIn = GoogleSignIn();
-                  final googleAccount = await _googleSignIn.signIn();
+                  final googleSignIn = GoogleSignIn();
+                  final googleAccount = await googleSignIn.signIn();
 
                   if (googleAccount != null) {
                     final googleAuth = await googleAccount.authentication;
@@ -88,9 +88,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         accessToken: googleAuth.accessToken,
                       ));
                       print('success: 구글 로그인');
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const HomeScreen()),
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const HomeScreen(),
+                        ),
                       );
                     } catch (e) {
                       print('error: $e');
@@ -105,9 +106,10 @@ class _LoginScreenState extends State<LoginScreen> {
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SignUpScreen()),
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const SignUpScreen(),
+                    ),
                   );
                 },
                 // width: double.infinity,

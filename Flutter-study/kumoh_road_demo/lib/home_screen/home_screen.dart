@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../bus_screen/bus_info_screen.dart';
+import '../gpt_screen/gpt_service_screen.dart';
 import '../quickBorad_Screen/bike_screen.dart';
 import '../tran_screen/train_info_screen.dart';
 
@@ -16,7 +17,7 @@ class HomeScreen extends StatelessWidget {
             TextButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => TrainInfoScreen(),
+                  builder: (context) => const TrainInfoScreen(),
                 ));
               },
               child: const Text('기차정보'),
@@ -32,7 +33,7 @@ class HomeScreen extends StatelessWidget {
             TextButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => BikeScreen(),
+                  builder: (context) => const BikeScreen(),
                 ));
               },
               child: const Text('퀵보드 및 자전거 경로'),
@@ -40,32 +41,13 @@ class HomeScreen extends StatelessWidget {
             TextButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => GptServiceScreen(),
+                  builder: (context) => const GptServiceScreen(),
                 ));
               },
               child: const Text('GPT 서비스'),
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class GptServiceScreen extends StatefulWidget {
-  @override
-  _GptServiceScreenState createState() => _GptServiceScreenState();
-}
-
-class _GptServiceScreenState extends State<GptServiceScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('GPT 서비스'),
-      ),
-      body: const Center(
-        child: Text('GPT 서비스 화면'),
       ),
     );
   }
