@@ -45,6 +45,9 @@ class MainActivity : AppCompatActivity() {
             12 -> "king"
             else -> "error"
         }
-        return "c_${number}_of_${shape}"
+        return if(number in arrayOf("jack","queen","king"))
+            "c_${number}_of_${shape}2"
+        else
+            "c_${number}_of_${shape}"
     }
 }
