@@ -12,8 +12,8 @@ class ImageActivity : AppCompatActivity() {
         setContentView(main.root)
 
         val res = when (intent.getStringExtra(MainActivity.KEY_NAME)) {
-            "gundam" -> R.drawable.gundam
-            "zaku" -> R.drawable.zaku
+            MainActivity.GUNDAM -> R.drawable.gundam
+            MainActivity.ZAKU -> R.drawable.zaku
             else -> R.drawable.ic_launcher_foreground
         }
         main.image.setImageResource(res)

@@ -9,6 +9,8 @@ import kr.ac.kumoh.ce.s20190633.s23w07intentdata.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     companion object {
         const val KEY_NAME = "mechanic"
+        const val GUNDAM = "gundam"
+        const val ZAKU = "zaku"
     }
 
     private lateinit var main: ActivityMainBinding
@@ -21,7 +23,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "건담 이미지", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, ImageActivity::class.java)
-            intent.putExtra(KEY_NAME, "gundam")
+            intent.putExtra(KEY_NAME, GUNDAM)
             startActivity(intent)
         }
 
@@ -29,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "자쿠 이미지", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, ImageActivity::class.java)
-            intent.putExtra(KEY_NAME, "zaku")
+            intent.putExtra(KEY_NAME, ZAKU)
             startActivity(intent)
         }
     }
