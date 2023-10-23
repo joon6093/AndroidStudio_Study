@@ -1,11 +1,13 @@
 package kr.ac.kumoh.ce.s20190633.s23w07intentdata
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import kr.ac.kumoh.ce.s20190633.s23w07intentdata.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), OnClickListener {
@@ -16,6 +18,25 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     }
 
     private lateinit var main: ActivityMainBinding
+    private val startForResult = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode != Activity.RESULT_OK)
+            return@registerForActivityResult
+
+        val result = it.data?.getIntExtra(
+            ImageActivity.IMAGE_RESULT,
+            ImageActivity.NONE) // 없을 때 반환값
+        val str = when (result) {
+            ImageActivity.LIKE -> "좋아요"
+            ImageActivity.DISLIKE -> "싫어요"
+            else -> ""
+        }
+        when (it.data?.getStringExtra(ImageActivity.IMAGE_NAME)) {
+            GUNDAM -> main.btnGundam.text = "건담 ($str)"
+            ZAKU -> main.btnZaku.text = "자쿠 ($str)"
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         main = ActivityMainBinding.inflate(layoutInflater)
@@ -39,6 +60,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
             else -> return
         }
         intent.putExtra(KEY_NAME, value)
-        startActivity(intent)
+        //startActivity(intent)
+        startForResult.launch(intent)
     }
 }
