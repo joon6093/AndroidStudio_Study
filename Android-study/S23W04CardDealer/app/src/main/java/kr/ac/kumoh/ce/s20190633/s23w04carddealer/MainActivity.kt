@@ -42,10 +42,10 @@ class MainActivity : AppCompatActivity() {
             // 첫 번째 카드 이미지를 설정
             main.card1.setImageResource(res[0])
             // 아래는 주석 처리된 다른 카드들의 이미지 설정 코드
-            // main.card2.setImageResource(res[1])
-            // main.card3.setImageResource(res[2])
-            // main.card4.setImageResource(res[3])
-            // main.card5.setImageResource(res[4])
+             main.card2.setImageResource(res[1])
+             main.card3.setImageResource(res[2])
+             main.card4.setImageResource(res[3])
+             main.card5.setImageResource(res[4])
         })
 
         // '셔플' 버튼을 클릭했을 때의 동작 설정
