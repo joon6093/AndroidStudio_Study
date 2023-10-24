@@ -58,7 +58,19 @@
         android:layout_margin="8dp"
         android:text="Good Luck"
         app:layout_constraintTop_toBottomOf="@id/card4"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_hand_type"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
+
+    <!-- 포커 족보 결과를 표시하기 위한 TextView 추가 -->
+    <TextView
+        android:id="@+id/tv_hand_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintTop_toBottomOf="@id/btn_shuffle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

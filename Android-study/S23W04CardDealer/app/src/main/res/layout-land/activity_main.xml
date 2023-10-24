@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- ConstraintLayout을 시작. 이는 뷰와 뷰 사이의 제약 조건을 기반으로 뷰의 위치를 정의하는 레이아웃입니다. -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -49,6 +49,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/card4"
         app:layout_constraintTop_toBottomOf="@id/card2" />
+
+    <!-- 카드를 섞는 동작을 시작하기 위한 버튼입니다. -->
     <Button
         android:id="@+id/btn_shuffle"
         android:layout_width="match_parent"
@@ -56,7 +58,19 @@
         android:layout_margin="8dp"
         android:text="Good Luck"
         app:layout_constraintTop_toBottomOf="@id/card4"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_hand_type"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
+
+    <!-- 포커 족보 결과를 표시하기 위한 TextView 추가 -->
+    <TextView
+        android:id="@+id/tv_hand_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintTop_toBottomOf="@id/btn_shuffle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

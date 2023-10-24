@@ -47,6 +47,9 @@ class MainActivity : AppCompatActivity() {
              main.card4.setImageResource(res[3])
              main.card5.setImageResource(res[4])
         })
+        model.handType.observe(this, Observer {
+            main.tvHandType.text = it
+        })
 
         // '셔플' 버튼을 클릭했을 때의 동작 설정
         main.btnShuffle.setOnClickListener {

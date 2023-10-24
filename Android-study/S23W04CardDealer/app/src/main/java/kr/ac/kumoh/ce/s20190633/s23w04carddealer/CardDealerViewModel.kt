@@ -16,6 +16,11 @@ class CardDealerViewModel : ViewModel() {
     val cards: LiveData<IntArray>
         get() = _cards
 
+    // 포커 족보를 저장할 LiveData 추가
+    private var _handType = MutableLiveData<String>("")
+    val handType: LiveData<String>
+        get() = _handType
+
     // 카드를 셔플하는 함수
     fun shuffle() {
         var num = 0
@@ -39,5 +44,56 @@ class CardDealerViewModel : ViewModel() {
 
         // 셔플된 카드 번호를 _cards에 저장하여 LiveData를 업데이트
         _cards.value = newCards
+        _handType.value = determineHand(newCards)
+    }
+    private fun determineHand(cards: IntArray): String {
+        val suits = Array(4) { 0 }  // 각 카드 무늬별 개수
+        val values = Array(13) { 0 }  // 각 카드 숫자별 개수
+
+        for (card in cards) {
+            suits[card / 13]++
+            values[card % 13]++
+        }
+
+        val distinctValues = values.filter { it > 0 }.size
+        val maxOfValues = values.maxOrNull() ?: 0
+
+        // 족보 판별
+        return when {
+            hasRoyalStraight(values) && hasFlush(suits) -> "로열 스트레이트 플러시"
+            hasStraight(values) && hasFlush(suits) -> "스트레이트 플러시"
+            maxOfValues == 4 -> "포 카드"
+            maxOfValues == 3 && distinctValues == 2 -> "풀 하우스"
+            hasFlush(suits) -> "플러시"
+            hasStraight(values) -> "스트레이트"
+            maxOfValues == 3 -> "트리플"
+            maxOfValues == 2 && distinctValues == 3 -> "투 페어"
+            maxOfValues == 2 && distinctValues == 4 -> "원 페어"
+            else -> "노 페어"
+        }
+    }
+
+    private fun hasRoyalStraight(values: Array<Int>): Boolean {
+        return values[0] > 0 && values[1] > 0 && values[10] > 0 && values[11] > 0 && values[12] > 0
+    }
+
+    private fun hasStraight(values: Array<Int>): Boolean {
+        // 일반 스트레이트 확인
+        for (i in 0 until 9) {
+            if (values.slice(i until i + 5).all { it > 0 }) {
+                return true
+            }
+        }
+
+        // A, 2, 3, 4, 5 스트레이트 확인
+        if (values[0] > 0 && values.slice(1 until 5).all { it > 0 }) {
+            return true
+        }
+
+        return false
+    }
+
+    private fun hasFlush(suits: Array<Int>): Boolean {
+        return suits.any { it == 5 }
     }
 }
