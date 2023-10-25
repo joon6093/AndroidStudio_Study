@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-//import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -9,11 +10,12 @@ void main() async {
   );
   runApp(const MyApp());
 }
+
 //할일 클래스
 class Todo {
-  bool isDone = false; //할일 완료 여부 저장
+  bool isDone; //할 일 완료 여부 저장
   String title; //할일 이름 저장
-  Todo(this.title); //할일 클래스 생성자
+  Todo(this.title, {this.isDone = false});
 }
 
 class MyApp extends StatelessWidget {
@@ -50,29 +52,32 @@ class _TodoListPageState extends State<TodoListPage> {
   //할일 추가 메서드
   void _addTodo(Todo todo) {
     setState(() {
-      _item.add(todo); //인자로 받은 Todo를 리스트에 추가
+      FirebaseFirestore.instance.collection('todo').add(
+          {'title': todo.title, 'isDone': todo.isDone}
+      );
       _todoController.text = ''; //TextField 비움
     });
   }
 
-//할일 삭제 메서드
-  void _deleteTodo(Todo todo) {
-    setState(() {
-      _item.remove(todo); //인자로 받은Todo를 리스트에서 삭제
+//할 일 삭제 메서드
+  void _deleteTodo(DocumentSnapshot doc)
+  {
+    FirebaseFirestore.instance.collection('todo').doc(doc.id).delete();
+  }
+
+//할 일 완료/미완료 메서드
+  void _toggleTodo(DocumentSnapshot doc)
+  {
+    FirebaseFirestore.instance.collection('todo').doc(doc.id).update({
+      'isDone': !doc['isDone'],
     });
   }
 
-//할일 완료 /미완료 메서드
-  void _toggleTodo(Todo todo) {
-    setState(() {
-      todo.isDone = !todo.isDone;
-    });
-  }
-
-  //할 일 객체를 ListTitle 형태로 변경하는 함수
-  Widget _buildItemWidget(Todo todo) {
+  //할 일 객체를 ListTile 형태로 변경하는 메서드
+  Widget _buildItemWidget(DocumentSnapshot doc) {
+    final todo = Todo(doc['title'], isDone: doc['isDone']);
     return ListTile(
-      onTap:() => _toggleTodo(todo), // 클릭 시 완료/취소/Todo: 클릭 시 완료/취소
+      onTap: () => _toggleTodo(doc), //클릭 시 완료/취소
       title: Text(
         todo.title, //할 일 제목
         style: todo.isDone
@@ -81,11 +86,11 @@ class _TodoListPageState extends State<TodoListPage> {
                 decoration: TextDecoration.lineThrough, //취소선 적용
                 fontStyle: FontStyle.italic, //이탤릭체 적용
               )
-            : null, //할 일이 완료되지 않은 경우 아무 텍스트 스타일도 적용하지 않음
+            : null, //할 일이 완료 되지 않은 경우 아무 스타일도 적용하지 않음
       ),
       trailing: IconButton(
         icon: const Icon(Icons.delete_forever),
-        onPressed:() => _deleteTodo(todo), //쓰레기통 아이콘 클릭 시 할일 삭제
+        onPressed: () => _deleteTodo(doc), //쓰레기통 아이콘 클릭 시 할일 삭제
       ),
     );
   }
@@ -107,19 +112,31 @@ class _TodoListPageState extends State<TodoListPage> {
                       controller: _todoController,
                     ),
                   ),
-                  ElevatedButton( //TextField에 입력된 값을 기반으로 Todo 리스트 추가
-                      onPressed:() => _addTodo(Todo(_todoController.text)),
-                      child: const Text('추가')
-                  ),
+                  ElevatedButton(
+                      //TextField에 입력된 값을 기반으로 Todo 리스트 추가
+                      onPressed: () => _addTodo(Todo(_todoController.text)),
+                      child: const Text('추가')),
                 ],
               ),
-              Expanded(
-                child: ListView(
-                  //Todo: 할일 목록 표시
-                  children:
-                      _item.map((todo) => _buildItemWidget(todo)).toList(),
-                ),
-              )
+              StreamBuilder<QuerySnapshot>(
+                  //todo 컬렉션에 있는 모든 문서를 스트림으로 획득
+                  //스트림은 데이터가 변경되었을 때 반응하여 화면을 다시 그려 줌.
+                  stream:
+                      FirebaseFirestore.instance.collection('todo').snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return CircularProgressIndicator();
+                    }
+                    final documents = snapshot.data!.docs;
+                    return Expanded(
+                      child: ListView(
+                        //Todo: 할 일 목록 표시
+                        children: documents
+                            .map((doc) => _buildItemWidget(doc))
+                            .toList(),
+                      ),
+                    );
+                  }),
             ],
           )),
     );
