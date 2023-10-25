@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
-
-void main() => runApp(const MyApp());
-
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp());
+}
 //할일 클래스
 class Todo {
   bool isDone = false; //할일 완료 여부 저장
