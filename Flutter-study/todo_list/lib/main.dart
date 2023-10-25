@@ -40,6 +40,49 @@ class _TodoListPageState extends State<TodoListPage> {
     super.dispose();
   }
 
+  //할일 추가 메서드
+  void _addTodo(Todo todo) {
+    setState(() {
+      _item.add(todo); //인자로 받은 Todo를 리스트에 추가
+      _todoController.text = ''; //TextField 비움
+    });
+  }
+
+//할일 삭제 메서드
+  void _deleteTodo(Todo todo) {
+    setState(() {
+      _item.remove(todo); //인자로 받은Todo를 리스트에서 삭제
+    });
+  }
+
+//할일 완료 /미완료 메서드
+  void _toggleTodo(Todo todo) {
+    setState(() {
+      todo.isDone = !todo.isDone;
+    });
+  }
+
+  //할 일 객체를 ListTitle 형태로 변경하는 함수
+  Widget _buildItemWidget(Todo todo) {
+    return ListTile(
+      onTap:() => _toggleTodo(todo), // 클릭 시 완료/취소/Todo: 클릭 시 완료/취소
+      title: Text(
+        todo.title, //할 일 제목
+        style: todo.isDone
+            ? const TextStyle(
+                //할 일이 완료된 경우 텍스트 스타일 적용
+                decoration: TextDecoration.lineThrough, //취소선 적용
+                fontStyle: FontStyle.italic, //이탤릭체 적용
+              )
+            : null, //할 일이 완료되지 않은 경우 아무 텍스트 스타일도 적용하지 않음
+      ),
+      trailing: IconButton(
+        icon: const Icon(Icons.delete_forever),
+        onPressed:() => _deleteTodo(todo), //쓰레기통 아이콘 클릭 시 할일 삭제
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,13 +100,17 @@ class _TodoListPageState extends State<TodoListPage> {
                       controller: _todoController,
                     ),
                   ),
-                  ElevatedButton(onPressed: () {}, child: Text('추가')),
+                  ElevatedButton( //TextField에 입력된 값을 기반으로 Todo 리스트 추가
+                      onPressed:() => _addTodo(Todo(_todoController.text)),
+                      child: const Text('추가')
+                  ),
                 ],
               ),
               Expanded(
                 child: ListView(
                   //Todo: 할일 목록 표시
-                  children: <Widget>[],
+                  children:
+                      _item.map((todo) => _buildItemWidget(todo)).toList(),
                 ),
               )
             ],
