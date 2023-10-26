@@ -54,11 +54,11 @@ class ImageActivity : AppCompatActivity(), OnClickListener {
     }
 
     // 버튼 클릭 시 호출되는 함수
-    override fun onClick(p0: View?) {
+    override fun onClick(v: View?) {  // -> 펑셔널 인터페이스 , SAM -> Single Abstract Method
         // 결과를 반환하기 위한 Intent 객체 생성
         val intent = Intent()  //  val intent = Intent(this, MainActivity::class.java)
         // 클릭된 버튼에 따라 평가 값 설정
-        val value = when (p0?.id) {
+        val value = when (v?.id) {
             main.btnLike.id -> {
                 LIKE
             }

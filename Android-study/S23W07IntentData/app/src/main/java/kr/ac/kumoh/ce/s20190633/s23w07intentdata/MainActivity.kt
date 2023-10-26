@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
     // ImageActivity로부터 결과를 받아오기 위한 콜백 정의.
     private val startForResult = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()) {
+        ActivityResultContracts.StartActivityForResult())
+    {
         // 결과가 OK가 아닌 경우에는 아무 처리도 하지 않고 반환한다.
         if (it.resultCode != Activity.RESULT_OK)
             return@registerForActivityResult
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         // ImageActivity에서 반환된 사용자의 평가(좋아요/싫어요)를 가져온다.
         val result = it.data?.getIntExtra(
             ImageActivity.IMAGE_RESULT,
-            ImageActivity.NONE) // 결과가 없을 때 기본값
+            ImageActivity.NONE) // int형인 경우에만 지정해주어야함 -> 결과가 없을 때 기본값
 
         // 사용자 평가를 문자열로 변환한다.
         val str = when (result) {
