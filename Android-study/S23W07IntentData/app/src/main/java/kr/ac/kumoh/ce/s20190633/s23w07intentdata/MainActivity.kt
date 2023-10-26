@@ -65,8 +65,9 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     // 버튼 클릭 시 호출되는 메서드.
     override fun onClick(p0: View?) {
         // ImageActivity로 이동하기 위한 Intent 객체를 생성한다.
-        val intent = Intent(this, ImageActivity::class.java)
-
+        //val intent = Intent(this, ImageActivity::class.java)
+        // AnotherActivaty로 이동하기 위한 InTent객체를 생성한다.
+        val intent = Intent(this, AnotherActivity::class.java)
         // 클릭된 버튼에 따라 메카닉 이름을 설정하고, 해당하는 메카닉의 이름을 토스트 메시지로 보여준다.
         val value = when (p0?.id) {
             main.btnGundam.id -> {
