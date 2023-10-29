@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     // 액티비티가 생성될 때 호출되는 콜백 메서드
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        //setContentView(R.layout.activity_main)
         // 뷰 바인딩을 사용하여 레이아웃 파일을 설정
         main = ActivityMainBinding.inflate(layoutInflater)
         setContentView(main.root)

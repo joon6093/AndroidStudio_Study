@@ -1,10 +1,10 @@
 package kr.ac.kumoh.ce.s20190633.s23w07intentdata
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.View.OnClickListener
+import androidx.appcompat.app.AppCompatActivity
 import kr.ac.kumoh.ce.s20190633.s23w07intentdata.databinding.ActivityImageBinding
 
 // 이미지 평가를 위한 액티비티 클래스 정의
@@ -56,7 +56,7 @@ class ImageActivity : AppCompatActivity(), OnClickListener {
     // 버튼 클릭 시 호출되는 함수
     override fun onClick(v: View?) {  // -> 펑셔널 인터페이스 , SAM -> Single Abstract Method
         // 결과를 반환하기 위한 Intent 객체 생성
-        val intent = Intent()  //  val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent()
         // 클릭된 버튼에 따라 평가 값 설정
         val value = when (v?.id) {
             main.btnLike.id -> {

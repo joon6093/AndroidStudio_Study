@@ -11,7 +11,7 @@ import kotlin.random.Random
 class LottoViewModel : ViewModel() {
 
     // MutableLiveData는 변경 가능한 데이터를 저장하며, UI 컴포넌트와 데이터의 동기화를 돕습니다.
-    private var _numbers = MutableLiveData<IntArray>(IntArray(6) { 0 })
+    private var _numbers:MutableLiveData<IntArray> = MutableLiveData<IntArray>(IntArray(6) { 0 })
 
     // numbers는 _numbers의 변경 불가능한 버전으로, UI에서 이를 관찰하게 됩니다.
     val numbers: LiveData<IntArray>

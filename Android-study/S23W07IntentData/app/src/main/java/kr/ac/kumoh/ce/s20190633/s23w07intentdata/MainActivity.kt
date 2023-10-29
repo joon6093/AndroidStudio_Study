@@ -2,12 +2,12 @@ package kr.ac.kumoh.ce.s20190633.s23w07intentdata
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import kr.ac.kumoh.ce.s20190633.s23w07intentdata.databinding.ActivityMainBinding
 
 // 메인 액티비티 클래스 정의. 이 액티비티에서는 두 버튼(건담, 자쿠)을 제공하며, 각 버튼을 클릭하면
