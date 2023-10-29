@@ -25,8 +25,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     private lateinit var main: ActivityMainBinding
 
     // ImageActivity로부터 결과를 받아오기 위한 콜백 정의.
-    private val startForResult = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult())
+    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
     {
         // 결과가 OK가 아닌 경우에는 아무 처리도 하지 않고 반환한다.
         if (it.resultCode != Activity.RESULT_OK)
