@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
 
         // 뷰모델 인스턴스 초기화
         model = ViewModelProvider(this)[LottoViewModel::class.java]
-        setNumbersText() // 초기 로또 번호 텍스트 설정
 
         // 로또 번호가 변경될 때마다 UI 업데이트
         model.numbers.observe(this, Observer {

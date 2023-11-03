@@ -44,8 +44,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         }
         // 선택된 메카닉 이름에 따라 해당하는 버튼의 텍스트를 업데이트한다.
         when (it.data?.getStringExtra(ImageActivity.IMAGE_NAME)) {
-            GUNDAM -> main.btnGundam.text = "건담 ($str)"
-            ZAKU -> main.btnZaku.text = "자쿠 ($str)"
+            GUNDAM -> main.btnGundam.text = "건담 (${str})"
+            ZAKU -> main.btnZaku.text = "자쿠 (${str})"
         }
     }
 
@@ -81,7 +81,6 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         }
         // 선택된 메카닉 이름을 Intent에 추가한다.
         intent.putExtra(KEY_NAME, value)
-
         // Intent를 사용하여 ImageActivity를 시작하고, 그 결과를 기다린다.
         startForResult.launch(intent)
     }
