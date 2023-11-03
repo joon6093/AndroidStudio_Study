@@ -10,17 +10,10 @@ import kotlin.random.Random
 // 카드 딜러 앱의 ViewModel 정의
 class CardDealerViewModel : ViewModel() {
     // _cards는 내부에서만 변경 가능한 LiveData로서, 초기 값으로 -1을 가진 5개의 정수 배열을 갖는다.
-    //private var _cards = MutableLiveData<IntArray>(IntArray(5) { -1 })
     private var _cards = MutableLiveData<IntArray>(intArrayOf(-1, -1, -1, -1, -1 ))
     // cards는 외부에서 읽기 전용으로 접근 가능한 LiveData이다.
     val cards: LiveData<IntArray>
         get() = _cards
-
-//    private var _cards = MutableLiveData<Array<Int>>(arrayOf(-1, -1, -1, -1, -1))
-//    // cards는 외부에서 읽기 전용으로 접근 가능한 LiveData이다.
-//    val cards: LiveData<Array<Int>>
-//        get() = _cards
-
     // 포커 족보를 저장할 LiveData 추가
     private var _handType = MutableLiveData<String>("")
     val handType: LiveData<String>
@@ -65,7 +58,7 @@ class CardDealerViewModel : ViewModel() {
 
         // 족보 판별
         return when {
-            hasRoyalStraight(values) && hasFlush(suits) -> "로열 스트레이트 플러시"
+            hasRoyalStraight(values) && hasFlush(suits) -> "로얄 플러시"
             hasStraight(values) && hasFlush(suits) -> "스트레이트 플러시"
             maxOfValues == 4 -> "포 카드"
             maxOfValues == 3 && distinctValues == 2 -> "풀 하우스"
@@ -74,7 +67,7 @@ class CardDealerViewModel : ViewModel() {
             maxOfValues == 3 -> "트리플"
             maxOfValues == 2 && distinctValues == 3 -> "투 페어"
             maxOfValues == 2 && distinctValues == 4 -> "원 페어"
-            else -> "노 페어"
+            else -> "하이 카드"
         }
     }
 

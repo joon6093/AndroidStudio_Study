@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ff0"
+    android:background="#DDEEFF"
     tools:context=".MainActivity">
 
     <!-- 카드 이미지를 표시하기 위한 ImageView입니다. -->
@@ -13,6 +13,7 @@
         android:id="@+id/card1"
         android:layout_width="100dp"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toTopOf="@id/card4"
         app:layout_constraintEnd_toStartOf="@id/card2"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,6 +22,7 @@
         android:id="@+id/card2"
         android:layout_width="100dp"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toTopOf="@id/card4"
         app:layout_constraintEnd_toEndOf="@id/card3"
         app:layout_constraintStart_toEndOf="@id/card1"
@@ -29,6 +31,7 @@
         android:id="@+id/card3"
         android:layout_width="100dp"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toTopOf="@id/card4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/card2"
@@ -65,12 +68,15 @@
     <!-- 포커 족보 결과를 표시하기 위한 TextView 추가 -->
     <TextView
         android:id="@+id/tv_hand_type"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text=""
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold|italic"
+        android:gravity="center"
+        android:background="@android:color/darker_gray"
         app:layout_constraintTop_toBottomOf="@id/btn_shuffle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

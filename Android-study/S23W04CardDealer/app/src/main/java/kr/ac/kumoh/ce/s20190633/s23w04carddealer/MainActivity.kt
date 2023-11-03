@@ -30,22 +30,21 @@ class MainActivity : AppCompatActivity() {
         model.cards.observe(this, Observer {
             val res = IntArray(5)
             for (i in it.indices) {
-                Log.i("it:", it[i].toString())
-                Log.i("getCardName:", getCardName(it[i]).toString())
+//                Log.i("it:", it[i].toString())
+//                Log.i("getCardName:", getCardName(it[i]).toString())
                 res[i] = resources.getIdentifier(
                     getCardName(it[i]),
                     "drawable",
                     packageName
                 )
-                Log.i("res:", res[i].toString())
+//                Log.i("res:", res[i].toString())
             }
-            // 첫 번째 카드 이미지를 설정
+            // 카드 이미지를 설정
             main.card1.setImageResource(res[0])
-            // 아래는 주석 처리된 다른 카드들의 이미지 설정 코드
-             main.card2.setImageResource(res[1])
-             main.card3.setImageResource(res[2])
-             main.card4.setImageResource(res[3])
-             main.card5.setImageResource(res[4])
+            main.card2.setImageResource(res[1])
+            main.card3.setImageResource(res[2])
+            main.card4.setImageResource(res[3])
+            main.card5.setImageResource(res[4])
         })
         model.handType.observe(this, Observer {
             main.tvHandType.text = it
