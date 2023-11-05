@@ -5,7 +5,9 @@ package kr.ac.kumoh.ce.s20190633.s23w04carddealer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlin.random.Random
+import kotlinx.coroutines.*
 
 // 카드 딜러 앱의 ViewModel 정의
 class CardDealerViewModel : ViewModel() {
@@ -95,21 +97,42 @@ class CardDealerViewModel : ViewModel() {
         return suits.any { it == 5 }
     }
 
-    fun simulate(times: Int) {
-        val handCounts = mutableMapOf<String, Int>()
-
-        for (i in 0 until times) {
-            shuffle()
-            val hand = _handType.value ?: "Error"
-            handCounts[hand] = handCounts.getOrDefault(hand, 0) + 1
-        }
-
-        // 결과를 팝업 창으로 표시
-        _simulationResult.postValue(handCounts.map { "${it.key}: ${it.value}" }.joinToString("\n"))
-    }
-
     private var _simulationResult = MutableLiveData<String>()
     val simulationResult: LiveData<String>
         get() = _simulationResult
 
+    private var simulationJob: Job? = null
+
+    fun simulate(times: Int) {
+        simulationJob = viewModelScope.launch {
+            val handCounts = mutableMapOf<String, Int>()
+            var results = ""
+            for (i in 0 until times) {
+                shuffle()
+                delay(300) // 시각적 효과를 위한 지연
+
+                val hand = _handType.value ?: "Error"
+                handCounts[hand] = handCounts.getOrDefault(hand, 0) + 1
+
+                if (i == times - 1) {
+                    results = handCounts.entries.joinToString("\n") { (hand, count) ->
+                        val probability = count.toDouble() / times * 100
+                        "$hand:${count}회 -> ${"%.1f".format(probability)}%"
+                    }
+                } else {
+                    // 시뮬레이션이 진행 중일 때는 확률 계산 없이 결과만 업데이트
+                    results = handCounts.entries.joinToString("\n") { (hand, count) ->
+                        "$hand:${count}회"
+                    }
+                }
+                _simulationResult.postValue(results)
+            }
+        }
+    }
+    fun cancelSimulation() {
+        simulationJob?.cancel()
+    }
+    fun isSimulationInProgress(): Boolean {
+        return simulationJob?.isActive == true
+    }
 }

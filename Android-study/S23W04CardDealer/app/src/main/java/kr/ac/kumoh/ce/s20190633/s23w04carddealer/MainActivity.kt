@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
+import android.view.Gravity
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
@@ -17,8 +18,7 @@ class MainActivity : AppCompatActivity() {
     // 뷰 바인딩 변수와 ViewModel 변수 선언
     private lateinit var main: ActivityMainBinding
     private lateinit var model: CardDealerViewModel
-
-
+    private var simulationDialog: AlertDialog? = null
     // 액티비티가 생성될 때 호출되는 콜백 메서드
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,34 +59,55 @@ class MainActivity : AppCompatActivity() {
             model.shuffle()
         }
         model.simulationResult.observe(this, Observer { result ->
-            AlertDialog.Builder(this)
-                .setTitle("Simulation Result")
-                .setMessage(result)
-                .setPositiveButton("OK", null)
-                .show()
+            if (simulationDialog == null) {
+                simulationDialog = AlertDialog.Builder(this)
+                    .setTitle("시뮬레이션 결과")
+                    .setMessage(result)
+                    .setNegativeButton("취소") { dialog, _ ->
+                        model.cancelSimulation()
+                        dialog.dismiss()
+                    }
+                    .create()
+            } else {
+                simulationDialog?.setMessage(result)
+            }
+
+            // 시뮬레이션이 진행 중인지 여부에 따라 버튼 텍스트 설정
+            val isSimulationInProgress = model.isSimulationInProgress()
+            simulationDialog?.getButton(AlertDialog.BUTTON_NEGATIVE)?.text =
+                if (isSimulationInProgress) "취소" else "확인"
+            simulationDialog?.show()
+
+            // 다이얼로그 위치 조정
+            simulationDialog?.window?.let { window ->
+                val layoutParams = window.attributes
+                layoutParams.gravity = Gravity.BOTTOM
+                window.attributes = layoutParams
+            }
+
         })
-        main.btnSimulation?.setOnClickListener {
+
+        main.btnSimulation.setOnClickListener {
             // 다이얼로그 생성 및 입력 받기
             val dialog = AlertDialog.Builder(this)
-            dialog.setTitle("Simulation")
-            dialog.setMessage("Enter the number of simulations:")
+            dialog.setTitle("시뮬레이션")
+            dialog.setMessage("시뮬레이션 횟수를 입력하세요:")
 
             val input = EditText(this)
             input.inputType = InputType.TYPE_CLASS_NUMBER
             dialog.setView(input)
 
-            dialog.setPositiveButton("OK") { _, _ ->
+            dialog.setPositiveButton("확인") { _, _ ->
                 val simulationCount = input.text.toString().toIntOrNull() ?: 0
                 model.simulate(simulationCount)
             }
 
-            dialog.setNegativeButton("Cancel") { dialogInterface, _ ->
+            dialog.setNegativeButton("취소") { dialogInterface, _ ->
                 dialogInterface.cancel()
             }
 
             dialog.show()
         }
-
     }
 
     // 카드 번호를 받아 해당하는 카드 이름(문자열)을 반환하는 함수
