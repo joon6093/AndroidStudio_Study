@@ -94,4 +94,22 @@ class CardDealerViewModel : ViewModel() {
     private fun hasFlush(suits: Array<Int>): Boolean {
         return suits.any { it == 5 }
     }
+
+    fun simulate(times: Int) {
+        val handCounts = mutableMapOf<String, Int>()
+
+        for (i in 0 until times) {
+            shuffle()
+            val hand = _handType.value ?: "Error"
+            handCounts[hand] = handCounts.getOrDefault(hand, 0) + 1
+        }
+
+        // 결과를 팝업 창으로 표시
+        _simulationResult.postValue(handCounts.map { "${it.key}: ${it.value}" }.joinToString("\n"))
+    }
+
+    private var _simulationResult = MutableLiveData<String>()
+    val simulationResult: LiveData<String>
+        get() = _simulationResult
+
 }

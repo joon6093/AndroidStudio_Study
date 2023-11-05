@@ -4,7 +4,10 @@ package kr.ac.kumoh.ce.s20190633.s23w04carddealer
 // 필요한 Android 라이브러리와 클래스들을 임포트
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kr.ac.kumoh.ce.s20190633.s23w04carddealer.databinding.ActivityMainBinding
@@ -14,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     // 뷰 바인딩 변수와 ViewModel 변수 선언
     private lateinit var main: ActivityMainBinding
     private lateinit var model: CardDealerViewModel
+
 
     // 액티비티가 생성될 때 호출되는 콜백 메서드
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +58,35 @@ class MainActivity : AppCompatActivity() {
         main.btnShuffle.setOnClickListener {
             model.shuffle()
         }
+        model.simulationResult.observe(this, Observer { result ->
+            AlertDialog.Builder(this)
+                .setTitle("Simulation Result")
+                .setMessage(result)
+                .setPositiveButton("OK", null)
+                .show()
+        })
+        main.btnSimulation?.setOnClickListener {
+            // 다이얼로그 생성 및 입력 받기
+            val dialog = AlertDialog.Builder(this)
+            dialog.setTitle("Simulation")
+            dialog.setMessage("Enter the number of simulations:")
+
+            val input = EditText(this)
+            input.inputType = InputType.TYPE_CLASS_NUMBER
+            dialog.setView(input)
+
+            dialog.setPositiveButton("OK") { _, _ ->
+                val simulationCount = input.text.toString().toIntOrNull() ?: 0
+                model.simulate(simulationCount)
+            }
+
+            dialog.setNegativeButton("Cancel") { dialogInterface, _ ->
+                dialogInterface.cancel()
+            }
+
+            dialog.show()
+        }
+
     }
 
     // 카드 번호를 받아 해당하는 카드 이름(문자열)을 반환하는 함수
@@ -93,4 +126,5 @@ class MainActivity : AppCompatActivity() {
         // 카드 이름을 반환
         return "c_${number}_of_${shape}"
     }
+
 }
