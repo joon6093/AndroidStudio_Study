@@ -1,5 +1,6 @@
 package kr.ac.kumoh.ce.s20190633.s23w06intent
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -41,7 +42,7 @@ class MainActivity : ComponentActivity() {
 // 인사말과 여러 버튼을 포함하는 컴포넌트 정의
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    val context = LocalContext.current // 현재의 Context를 가져옴
+    val context = LocalContext.current as Activity// 현재의 Context를 가져옴
 
     Column(
         modifier = modifier
