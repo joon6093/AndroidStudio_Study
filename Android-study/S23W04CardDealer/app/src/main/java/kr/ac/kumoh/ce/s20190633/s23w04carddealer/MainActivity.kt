@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
             // 다이얼로그 생성 및 입력 받기
             val dialog = AlertDialog.Builder(this)
             dialog.setTitle("시뮬레이션")
-            dialog.setMessage("시뮬레이션 횟수를 입력하세요:")
+            dialog.setMessage("시뮬레이션 횟수를 입력하세요")
 
             val input = EditText(this)
             input.inputType = InputType.TYPE_CLASS_NUMBER
