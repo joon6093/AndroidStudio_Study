@@ -29,7 +29,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             myApp {
-                Clicker()
+                //Clicker()
+                Counter()
             }
         }
     }
@@ -37,8 +38,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Clicker() {
-    //var txtString = "눌러주세요";
-    var txtString by remember { mutableStateOf("눌러주세요") }
+    //var txtString by remember { mutableStateOf("눌러주세요") }
+    val (txtString, setTxtString) = remember { mutableStateOf("눌러주세요") }
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -51,9 +52,30 @@ fun Clicker() {
         Button(modifier = Modifier
             .fillMaxWidth(),
             onClick = {
-                txtString = "눌렸습니다"
+                setTxtString("눌렸습니다")
             }) {
             // Text(text = "눌러봐")
+            Text("눌러봐")
+        }
+    }
+}
+@Composable
+fun Counter(){
+    var (txtInt, setTxtInt) = remember { mutableStateOf(0) }
+
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(8.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(text = txtInt.toString(),
+            fontSize = 70.sp,
+        )
+        Button(modifier = Modifier
+            .fillMaxWidth(),
+            onClick = {
+                setTxtInt(txtInt++)
+            }) {
             Text("눌러봐")
         }
     }
