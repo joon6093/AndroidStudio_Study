@@ -5,32 +5,44 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModelProvider
 import kr.ac.kumoh.ce.s20190633.s23w11counter.ui.theme.S23W11CounterTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        val vm = ViewModelProvider(owner = this)[CounterViewModel::class.java]
         super.onCreate(savedInstanceState)
         setContent {
             myApp {
-                //Clicker()
-                Counter()
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(8.dp),
+                    verticalArrangement = Arrangement.Center,
+                ) {
+                    Clicker()
+                    Counter(vm)
+                }
             }
         }
     }
@@ -42,7 +54,6 @@ fun Clicker() {
     val (txtString, setTxtString) = remember { mutableStateOf("눌러주세요") }
 
     Column(modifier = Modifier
-        .fillMaxSize()
         .padding(8.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally) {
@@ -60,23 +71,32 @@ fun Clicker() {
     }
 }
 @Composable
-fun Counter(){
-    var (txtInt, setTxtInt) = remember { mutableStateOf(0) }
+fun Counter(vm: CounterViewModel) {
+    val count by vm.count.observeAsState(0)
 
     Column(modifier = Modifier
-        .fillMaxSize()
         .padding(8.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = txtInt.toString(),
+        Text(text = "$count",
             fontSize = 70.sp,
         )
-        Button(modifier = Modifier
-            .fillMaxWidth(),
-            onClick = {
-                setTxtInt(txtInt++)
-            }) {
-            Text("눌러봐")
+        Row{
+            Button(modifier = Modifier
+                .weight(1f),
+                onClick = {
+                    vm.onAdd()
+                }) {
+                Text("증가")
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            Button(modifier = Modifier
+                .weight(1f),
+                onClick = {
+                    vm.onSub()
+                }) {
+                Text("감소")
+            }
         }
     }
 }
