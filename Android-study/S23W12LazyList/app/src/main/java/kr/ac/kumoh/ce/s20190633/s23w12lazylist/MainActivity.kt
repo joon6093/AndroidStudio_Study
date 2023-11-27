@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -21,33 +22,47 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kr.ac.kumoh.ce.s20190633.s23w12lazylist.ui.theme.S23W12LazyListTheme
 
+data class Song(var title: String, var singer: String)
+private val songs = mutableListOf<Song>()
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        repeat(10) {
+            songs.add(Song("테스형", "나훈아"))
+            songs.add(Song("소주 한 잔", "임창정"))
+            songs.add(Song("사랑에 연습이 있었다면", "임재현"))
+        }
+
         setContent {
-            S23W12LazyListTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    MyList()
-                }
-            }
+            MainScreen()
         }
     }
 }
 
 @Composable
-fun SongItem(index: Int) {
+fun MainScreen() {
+    S23W12LazyListTheme {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            MyList()
+        }
+    }
+}
+
+@Composable
+fun SongItem(song: Song) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color(0xffffffcc)) // 순서 중요함 -> 패딩 먼저하냐 나중에 하냐
+            .background(Color(0xffffffcc))
             .padding(16.dp)
     ) {
-        TextTitle("노래 $index")
-        TextSinger("이 노래를 부른 가수는 $index 입니다")
+        TextTitle("노래 ${song.title}")
+        TextSinger("이 노래를 부른 가수는 ${song.singer} 입니다")
     }
 }
 
@@ -64,11 +79,11 @@ fun TextSinger(singer: String) {
 @Composable
 fun MyList() {
     LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(8.dp), // 아이템들 사이를 8dp 간격으로
-        contentPadding = PaddingValues(horizontal = 8.dp) // 아이템 안에서 가로축만 8dp 간격 , 현재 세로는 설정 x
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(horizontal = 8.dp)
     ) {
-        items(30) {
-            SongItem(it)
+        items(songs)  { song ->
+            SongItem(song)
         }
     }
 }
