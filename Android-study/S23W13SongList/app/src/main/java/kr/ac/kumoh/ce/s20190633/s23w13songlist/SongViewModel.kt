@@ -10,7 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class SongViewModel() : ViewModel() {
-    private val SERVER_URL = "https://port-0-s23w10backend-1drvf2llomgqfda.sel5.cloudtype.app/"
+    private val SERVER_URL = "https://port-0-s23w10backend-1igmo82clookyw7l.sel5.cloudtype.app/"
     private val songApi: SongApi
     private val _songList = MutableLiveData<List<Song>>()
     val songList: LiveData<List<Song>>
