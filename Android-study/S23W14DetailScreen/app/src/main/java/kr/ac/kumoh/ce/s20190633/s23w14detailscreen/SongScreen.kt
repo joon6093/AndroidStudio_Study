@@ -1,9 +1,12 @@
 package kr.ac.kumoh.ce.s20190633.s23w14detailscreen
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -22,42 +25,46 @@ fun SongApp() {
 
     NavHost(
         navController = navController,
-        startDestination = SongScreen.List.name,  // 처음에 시작하는게 뭔지 List.name -> "List"
+        startDestination = SongScreen.List.name,
     ) {
         composable(route = SongScreen.List.name) {
             SongList(navController)
         }
         composable(
-            route = SongScreen.Detail.name + "/{songId}",   // 마찬가지
-            arguments = listOf(navArgument("songId") {
-                type = NavType.StringType
-            })
+            route = SongScreen.Detail.name + "/{songId},{songGenre}",
+            arguments = listOf(
+                navArgument("songId") { type = NavType.StringType },
+                navArgument("songGenre") { type = NavType.StringType },)
         ) {
-            SongDetail(it.arguments?.getString("songId"))
+            SongDetail(
+                it.arguments?.getString("songId"),
+                it.arguments?.getString("songGenre")
+            )
         }
     }
 }
 
 @Composable
 fun SongList(navController: NavController) {
-    Column {
-        Button(
-            onClick = { navController.navigate(SongScreen.Detail.name + "/song01") }
-        ) {
-            Text(text = "노래 1")
-        }
-        Button(
-            onClick = { navController.navigate(SongScreen.Detail.name + "/song02") }
-        ) {
-            Text(text = "노래 2")
+    LazyColumn {
+        items(50) {
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    navController.navigate(SongScreen.Detail.name + "/${it},발라드")
+                }
+            ) {
+                Text(text = "노래 $it")
+            }
         }
     }
 }
 
 @Composable
-fun SongDetail(songId: String?) {
+fun SongDetail(songId: String?, songGenre: String?) {
     Column {
         Text("노래 $songId")
         Text("가수 $songId")
+        Text("장르 $songGenre")
     }
 }
